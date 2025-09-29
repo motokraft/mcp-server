@@ -6,6 +6,11 @@
  * @link https://github.com/motokraft/mcp-server
  */
 
+use Motokraft\MCPServer\Interfaces\Environment\IEnvironmentBuilder;
+use Motokraft\MCPServer\Interfaces\Attribute\IAttributeBuilder;
+use Motokraft\MCPServer\Environment\EnvironmentBuilder;
+use Motokraft\MCPServer\Generic\Collection;
+
 abstract class ClassLoader
 {
     /**
@@ -48,11 +53,15 @@ abstract class ClassLoader
         require_once VENDOR_PATH . DS . 'functions.php';
         self::_ScanningDirectory(ROOT_PATH . DS . 'src');
 
-        self::$_EnvironmentBuilder = new EnvironmentBuilder(
-            self::$_ScaningAttributes
-        );
+        $Namespaces = array_keys(self::$_ScaningNamespaces);
 
-        return self::$_EnvironmentBuilder;
+        foreach($Namespaces as $Namespace)
+        {
+            self::_PrepareClassAttribute($Namespace);
+        }
+
+        $Environment = new EnvironmentBuilder(self::$_ScaningAttributes);
+        return self::$_EnvironmentBuilder = $Environment;
     }
 
     /**
