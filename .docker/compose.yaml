@@ -1,0 +1,33 @@
+services:
+
+  eurospeckam-mcp-nginx:
+    container_name: eurospeckam-mcp-nginx
+    image: nginx:latest
+    build:
+      dockerfile: ./nginx/Dockerfile
+      context: ./
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - ./../:/var/www/html
+    ports:
+      - 3059:80
+    networks:
+      - eurospeckam-mcp
+
+  eurospeckam-mcp-php:
+    container_name: eurospeckam-mcp-php
+    image: php:8.2-fpm
+    build:
+      dockerfile: ./php/Dockerfile
+      context: ./
+    restart: always
+    platform: linux/amd64
+    volumes:
+      - ./../:/var/www/html
+    networks:
+      - eurospeckam-mcp
+
+networks:
+  eurospeckam-mcp:
+    driver: bridge

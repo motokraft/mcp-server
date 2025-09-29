@@ -1,0 +1,24 @@
+{
+    "name": "eurospeckam/mcp-server",
+    "type": "project",
+    "version": "1.0.0",
+    "license": "GNU General Public License v3.0",
+    "prefer-stable": true,
+    "require": {
+        "symfony/routing": "^7.3",
+        "symfony/http-foundation": "^7.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "MCPServer\\": "./src"
+        },
+        "files": [
+            "./vendor/functions.php",
+            "./vendor/autoload.php"
+        ]
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "vendor-dir": ".composer"
+    }
+}
